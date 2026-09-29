@@ -1,0 +1,12 @@
+name: gitops-aks-demo
+description: One-node AKS cluster bootstrapped with Argo CD
+runtime: go
+config:
+  gitops-aks-demo:location:
+    default: westus2
+  gitops-aks-demo:nodeSize:
+    default: Standard_B2ms
+  gitops-aks-demo:nodeCount:
+    default: 1
+  gitops-aks-demo:argocdChartVersion:
+    default: 10.9.4

@@ -1,0 +1,3 @@
+/k8s/overlays/prod/ @gerardrecinto
+/argocd/ @gerardrecinto
+/infra/ @gerardrecinto

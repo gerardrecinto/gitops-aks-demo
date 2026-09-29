@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: demo
+  namespace: argocd
+spec:
+  description: gitops-aks-demo workloads and their cluster add-ons
+  sourceRepos:
+    - https://github.com/gerardrecinto/gitops-aks-demo.git
+    - https://bitnami.github.io/sealed-secrets
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: demo-dev
+    - server: https://kubernetes.default.svc
+      namespace: demo-prod
+    - server: https://kubernetes.default.svc
+      namespace: kube-system
+  # The sealed-secrets chart ships a CRD and cluster roles, so cluster-scoped
+  # kinds are open here. In a multi-team setup this list is narrowed per project.
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"

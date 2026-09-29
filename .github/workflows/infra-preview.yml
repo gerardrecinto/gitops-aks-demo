@@ -1,0 +1,37 @@
+name: infra-preview
+
+# Read-only. Pulumi authenticates to Azure with a GitHub OIDC token, so no Azure
+# secret is stored in this repository. See scripts/setup-oidc.sh.
+on:
+  pull_request:
+    paths: [infra/**, .github/workflows/infra-preview.yml]
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+env:
+  ARM_USE_OIDC: "true"
+  ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version-file: infra/go.mod
+          cache-dependency-path: infra/go.sum
+      - run: go vet ./...
+        working-directory: infra
+      - uses: pulumi/actions@8582a9e8cc630786854029b4e09281acd6794b58 # v6
+        with:
+          command: preview
+          stack-name: demo
+          work-dir: infra
+          comment-on-pr: true

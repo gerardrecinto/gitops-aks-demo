@@ -1,0 +1,33 @@
+name: set-image-tag
+description: Point an overlay at a new image tag and push the commit. Argo CD does the rest.
+inputs:
+  env:
+    description: Overlay to update (dev or prod)
+    required: true
+  tag:
+    description: Image tag to deploy
+    required: true
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        ENV: ${{ inputs.env }}
+        TAG: ${{ inputs.tag }}
+      run: |
+        set -euo pipefail
+        file="k8s/overlays/${ENV}/kustomization.yaml"
+        yq -i '.images[0].newTag = strenv(TAG)' "$file"
+        if git diff --quiet -- "$file"; then
+          echo "${ENV} already at ${TAG}, nothing to commit"
+          exit 0
+        fi
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git commit -m "deploy ${ENV}: ${TAG}" -- "$file"
+        for attempt in 1 2 3; do
+          git pull --rebase origin main && git push origin HEAD:main && exit 0
+          sleep $((attempt * 3))
+        done
+        echo "could not push the ${ENV} image tag" >&2
+        exit 1
