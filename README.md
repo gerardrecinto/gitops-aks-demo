@@ -29,6 +29,14 @@ The app is a tiny Go API (`/health`, `/version`, `/api/items`). The point of the
 
 CI and CD are separate on purpose. CI has write access to Git and the registry. It has no credentials for the cluster. Argo CD has read access to Git and runs inside the cluster. A stolen CI token cannot touch the cluster directly.
 
+## Demo
+
+A full rehearsal on a live cluster: deploy, failed CI, bad tag and rollback, promotion, drift, self-heal, prune, sealed secret.
+
+![demo](docs/assets/demo.gif)
+
+Teardown: `make down` removes everything ([recording](docs/assets/teardown.gif)).
+
 ## Layout
 
 ```

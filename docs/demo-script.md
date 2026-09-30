@@ -58,7 +58,7 @@ sed -i.bak 's/newTag: .*/newTag: "sha-doesnotexist"/' k8s/overlays/dev/kustomiza
 git commit -am "bad tag" && git push
 ```
 
-Expect Argo to sync, the new pod to sit in `ImagePullBackOff`, and the app to show `Progressing`, then `Degraded` after about a minute. The old pod keeps serving because the rollout uses `maxUnavailable: 0`, so `curl localhost:8081/health` still answers. Check with `kubectl -n demo-dev get pods`.
+Expect Argo to sync, the new pod to show `ErrImagePull` and then `ImagePullBackOff`, and the app to show `Progressing`, then `Degraded` after about a minute. The old pod keeps serving because the rollout uses `maxUnavailable: 0`, so `curl localhost:8081/health` still answers. Check with `kubectl -n demo-dev get pods`.
 
 Recover with Git, not the cluster: `git revert HEAD && git push`.
 
