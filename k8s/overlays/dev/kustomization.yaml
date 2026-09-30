@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: demo-dev
 resources:
   - ../../base
+  - sealed-secret.yaml
 replicas:
   - name: items-api
     count: 1
