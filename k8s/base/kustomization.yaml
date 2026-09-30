@@ -4,7 +4,6 @@ resources:
   - serviceaccount.yaml
   - deployment.yaml
   - service.yaml
-  - extra-configmap.yaml
 labels:
   - pairs:
       app.kubernetes.io/part-of: gitops-aks-demo
