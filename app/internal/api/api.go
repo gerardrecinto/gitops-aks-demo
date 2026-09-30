@@ -23,7 +23,7 @@ type item struct {
 var items = []item{
 	{1, "keyboard"},
 	{2, "monitor"},
-	{3, "headset"},
+	{3, "headphones"},
 }
 
 // NewHandler wires every route. It has no global state, so tests build their own.
