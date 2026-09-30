@@ -12,7 +12,7 @@ It has a clear model (Application, sync status, health status), a good UI for sh
 
 ## 3. Why GitHub Actions?
 
-The code already lives in GitHub, public repos get free minutes, and OIDC gives short-lived cloud credentials without stored secrets. In a larger company I would look at the same pipeline in Jenkins or another CI. The design does not depend on the CI tool, only that it can build, scan, push, and commit.
+The code already lives in GitHub, public repos get free minutes, and CI here needs no cloud credentials at all because it only writes to Git and the registry. If it did need Azure, OIDC would give it short-lived tokens without stored secrets. In a larger company I would look at the same pipeline in Jenkins or another CI. The design does not depend on the CI tool, only that it can build, scan, push, and commit.
 
 ## 4. Why AKS?
 
@@ -62,7 +62,7 @@ Start with what is here: probes, `kubectl top`, Argo health, and the app's `/met
 
 ## 14. How would I secure the supply chain?
 
-Already here: pinned action SHAs, Dependabot, Trivy on the image and the rendered manifests, provenance and SBOM attached to the image, a non-root distroless image with a read-only filesystem, and OIDC instead of stored cloud keys. To add: sign images with cosign and verify at admission (Kyverno or Ratify), pin the base image by digest, require signed commits, and use a private registry with a promotion step.
+Already here: pinned action SHAs, Dependabot, Trivy on the image and the rendered manifests, provenance and SBOM attached to the image, a non-root distroless image with a read-only filesystem, and CI that holds no cluster or cloud credentials. To add for cloud access from CI: OIDC federation instead of stored keys. To add: sign images with cosign and verify at admission (Kyverno or Ratify), pin the base image by digest, require signed commits, and use a private registry with a promotion step.
 
 ## 15. How would I reduce cloud costs further?
 

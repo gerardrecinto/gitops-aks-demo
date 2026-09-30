@@ -45,8 +45,8 @@ k8s/base/         Deployment, Service, ServiceAccount
 k8s/overlays/     dev and prod: namespace, replicas, image tag, config
 argocd/           Project, ApplicationSet (dev + prod), Sealed Secrets, root app
 infra/            Pulumi program in Go: resource group, AKS, Argo CD bootstrap
-scripts/          sealing key, seal a secret, GitHub to Azure OIDC setup
-.github/          ci, promote, manifests, infra-preview, dependabot
+scripts/          sealing key and sealing a secret
+.github/          ci, promote, manifests, dependabot
 docs/             cost, demo script, troubleshooting, interview walkthrough
 ```
 
@@ -97,8 +97,6 @@ curl localhost:8081/version
 ```
 
 6. Promote to prod: Actions, `promote`, Run workflow, approve the deployment.
-
-Optional: `scripts/setup-oidc.sh` and a `PULUMI_ACCESS_TOKEN` secret enable the `infra-preview` workflow, which runs `pulumi preview` on PRs using a GitHub OIDC token. No Azure secret is stored.
 
 ## Tear down
 

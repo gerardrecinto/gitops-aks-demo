@@ -16,7 +16,7 @@ Total is about $0.13 an hour. A two hour demo is around $0.30. Left running all 
 
 ## What costs nothing
 
-GitHub Actions on public repos, GHCR public images, Pulumi Cloud for one person, GitHub OIDC, Trivy, Argo CD, Sealed Secrets and Dependabot.
+GitHub Actions on public repos, GHCR public images, local Pulumi state, Trivy, Argo CD, Sealed Secrets and Dependabot.
 
 ## What I left out, and the price of adding it
 
