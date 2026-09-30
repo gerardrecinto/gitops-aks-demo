@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: demo-dev
 resources:
   - ../../base
+  - sealed-secret.yaml
 replicas:
   - name: items-api
     count: 1
@@ -13,4 +14,4 @@ configMapGenerator:
 # CI (dev) and the promote workflow (prod) rewrite newTag. Nothing else edits it.
 images:
   - name: ghcr.io/gerardrecinto/gitops-aks-demo
-    newTag: "sha-0000000"
+    newTag: "sha-02ceae897379e33cf91f228b8c5878c6fef8b6b0"
