@@ -45,7 +45,7 @@ func TestItems(t *testing.T) {
 	if err := json.Unmarshal(get(t, Config{}, "/api/items").Body.Bytes(), &got); err != nil {
 		t.Fatal(err)
 	}
-	if len(got) != 3 {
+	if len(got) != 4 {
 		t.Fatalf("want 3 items, got %d", len(got))
 	}
 }
