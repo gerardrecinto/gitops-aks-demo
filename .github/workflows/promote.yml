@@ -31,7 +31,7 @@ jobs:
           tag="${INPUT_TAG:-$(yq '.images[0].newTag' k8s/overlays/dev/kustomization.yaml)}"
           echo "tag=${tag}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
       - name: Refuse tags that are not in the registry
         env:

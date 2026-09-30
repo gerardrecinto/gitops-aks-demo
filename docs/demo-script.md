@@ -58,7 +58,7 @@ sed -i.bak 's/newTag: .*/newTag: "sha-doesnotexist"/' k8s/overlays/dev/kustomiza
 git commit -am "bad tag" && git push
 ```
 
-Expect Argo to sync, the new pod to sit in `ImagePullBackOff`, and the app to move from `Progressing` to `Degraded`. The old pod keeps serving because the rollout uses `maxUnavailable: 0`, so `curl localhost:8081/health` still answers. Check with `kubectl -n demo-dev get pods`.
+Expect Argo to sync, the new pod to show `ErrImagePull` and then `ImagePullBackOff`, and the app to show `Progressing`, then `Degraded` after about a minute. The old pod keeps serving because the rollout uses `maxUnavailable: 0`, so `curl localhost:8081/health` still answers. Check with `kubectl -n demo-dev get pods`.
 
 Recover with Git, not the cluster: `git revert HEAD && git push`.
 
@@ -112,7 +112,7 @@ git add k8s/overlays/dev && git commit -m "seal dev api key" && git push
 curl -s localhost:8081/version
 ```
 
-Expect `"api_key_configured": true` after the pod restarts. The value never appears in Git, in the Argo UI or in `/version`. `kubectl -n demo-dev get secret items-api-secrets` shows the decrypted Secret, created by the controller from the `SealedSecret`.
+Pods read Secrets at start, so run `kubectl -n demo-dev delete pod -l app.kubernetes.io/name=items-api` and expect `"api_key_configured": true` from the new pod. The value never appears in Git, in the Argo UI or in `/version`. `kubectl -n demo-dev get secret items-api-secrets` shows the decrypted Secret, created by the controller from the `SealedSecret`.
 
 ## 11. Infrastructure destruction
 

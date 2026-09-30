@@ -5,6 +5,7 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
   strategy:
     type: RollingUpdate
     rollingUpdate:
