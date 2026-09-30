@@ -2,6 +2,11 @@ STACK      ?= demo
 KUBECONFIG_FILE ?= $(HOME)/.kube/gitops-aks-demo
 export KUBECONFIG := $(KUBECONFIG_FILE)
 
+# The Pulumi program is pure Go, so cgo is off. State is local, no Pulumi Cloud account needed.
+export CGO_ENABLED := 0
+export PULUMI_BACKEND_URL ?= file://$(HOME)/.pulumi-state
+export PULUMI_CONFIG_PASSPHRASE_FILE ?= $(HOME)/.pulumi-demo-passphrase
+
 .PHONY: help preview up down kubeconfig argocd-password argocd-ui app-ui status test
 
 help:

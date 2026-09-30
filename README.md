@@ -49,7 +49,7 @@ Pulumi installs Argo CD and one `root` Application. From then on Git owns the cl
 | Choice | Why |
 |---|---|
 | One AKS cluster, two namespaces | A second cluster roughly doubles the bill. The cost is a shared node and shared blast radius, which I would not accept for real prod. |
-| Free AKS tier, one B2ms node | No control plane charge. The node is the main cost. |
+| Free AKS tier, one D2as_v6 node | No control plane charge. The node is the main cost. |
 | GHCR, not ACR | Free, and images survive a `make down`. A public package needs no pull secret. |
 | Image tag is `sha-<full commit>` | Immutable and traceable. `/version` reports the same value. |
 | dev deploys on every merge, prod on approval | `promote.yml` waits on the `production` environment reviewers, then commits the tag. Prod only changes when someone approves. |
@@ -101,3 +101,7 @@ make down
 That runs `pulumi destroy`, which removes the resource group and everything in it. Check with `az group list -o table`. The Pulumi state, the GHCR images and this repo remain, so `make up` rebuilds the same environment.
 
 Details: [cost](docs/cost.md), [demo script](docs/demo-script.md), [troubleshooting](docs/troubleshooting.md), [interview walkthrough](docs/interview-walkthrough.md).
+
+## Related
+
+[argocd-gitops](https://github.com/gerardrecinto/argocd-gitops) holds the wider Argo CD patterns: multi-cluster ApplicationSets, RBAC and preview environments, with placeholder values. This repo is the small runnable version on one AKS cluster.

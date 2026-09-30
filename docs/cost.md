@@ -7,12 +7,12 @@ These are rough East US pay-as-you-go numbers from memory. Check them in the Azu
 | Item | Approx. per hour | Notes |
 |---|---|---|
 | AKS control plane | $0 | Free tier, no uptime SLA |
-| 1 x Standard_B2ms node | $0.08 | The main cost. Two vCPU, 8 GB, enough for Argo CD plus both namespaces |
+| 1 x Standard_D2as_v6 node | $0.09 | The main cost. Two vCPU, 8 GB, enough for Argo CD plus both namespaces |
 | Standard load balancer | $0.03 | AKS creates it for outbound traffic |
 | Public IP | $0.005 | Attached to that load balancer |
 | 32 GB managed OS disk | under $0.01 | |
 
-Total is about $0.12 an hour. A two hour demo is around $0.25. Left running all month it is about $85, which is the reason `make down` exists.
+Total is about $0.13 an hour. A two hour demo is around $0.30. Left running all month it is about $95, which is the reason `make down` exists.
 
 ## What costs nothing
 
