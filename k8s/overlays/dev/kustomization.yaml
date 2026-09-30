@@ -14,4 +14,4 @@ configMapGenerator:
 # CI (dev) and the promote workflow (prod) rewrite newTag. Nothing else edits it.
 images:
   - name: ghcr.io/gerardrecinto/gitops-aks-demo
-    newTag: "sha-80f21a69087c4fa28508d58e73dba35922f63fa3"
+    newTag: "sha-c20a08e2dad675c7f2ce188c3d0e045a67621268"
