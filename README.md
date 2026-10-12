@@ -111,3 +111,16 @@ Details: [cost](docs/cost.md), [demo script](docs/demo-script.md), [troubleshoot
 ## Related
 
 [argocd-gitops](https://github.com/gerardrecinto/argocd-gitops) holds the wider Argo CD patterns: multi-cluster ApplicationSets, RBAC and preview environments, with placeholder values. This repo is the small runnable version on one AKS cluster.
+
+## Stacks and policy
+
+`infra/` has three stacks: `demo` (the original rehearsal), `dev` (Free tier, 1 node) and `prod` (Standard tier with the uptime SLA, 3 nodes, eastus2). Each has its own sealing key pair, stored as Pulumi secrets in the stack file, so a stack file is safe to commit but only opens with that stack's passphrase. State is a local file backend, not Pulumi Cloud.
+
+`policy/` is a Pulumi policy pack with one mandatory rule: a cluster in the `prod` stack must use the Standard or Premium tier. Preview a stack with it:
+
+```
+cd infra
+pulumi preview -s prod --policy-pack ../policy
+```
+
+Only `pulumi preview` has been run for `dev` and `prod`. Neither has been applied.

@@ -1,3 +1,7 @@
 .DS_Store
 *.bak
 Pulumi.*.yaml
+!infra/Pulumi.dev.yaml
+!infra/Pulumi.prod.yaml
+policy/node_modules/
+policy/bin/

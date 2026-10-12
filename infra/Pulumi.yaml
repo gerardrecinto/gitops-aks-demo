@@ -8,5 +8,7 @@ config:
     default: Standard_D2as_v6
   gitops-aks-demo:nodeCount:
     default: 1
+  gitops-aks-demo:clusterTier:
+    default: Free
   gitops-aks-demo:argocdChartVersion:
     default: 10.9.4
