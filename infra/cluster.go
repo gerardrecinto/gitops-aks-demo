@@ -30,10 +30,11 @@ func newCluster(ctx *pulumi.Context, s settings) (*cluster, error) {
 		Location:          rg.Location,
 		DnsPrefix:         pulumi.String(name),
 		Tags:              s.tags,
-		// Free tier: no control plane charge and no uptime SLA. Fine for a demo.
+		// Free has no control plane charge and no uptime SLA, Standard has the SLA.
+		// The tier comes from stack config, and the policy pack refuses Free on prod.
 		Sku: &containerservice.ManagedClusterSKUArgs{
 			Name: pulumi.String("Base"),
-			Tier: pulumi.String("Free"),
+			Tier: pulumi.String(s.clusterTier),
 		},
 		Identity: &containerservice.ManagedClusterIdentityArgs{
 			Type: containerservice.ResourceIdentityTypeSystemAssigned,

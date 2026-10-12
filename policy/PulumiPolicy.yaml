@@ -1,0 +1,4 @@
+runtime: nodejs
+name: aks-guardrails
+version: 0.0.1
+description: Guardrails for AKS clusters created by the infra program

@@ -12,6 +12,7 @@ type settings struct {
 	location           string
 	nodeSize           string
 	nodeCount          int
+	clusterTier        string
 	argocdChartVersion string
 	sealingCert        pulumi.StringOutput
 	sealingKey         pulumi.StringOutput
@@ -24,6 +25,7 @@ func loadSettings(ctx *pulumi.Context) settings {
 		location:           cfg.Get("location"),
 		nodeSize:           cfg.Get("nodeSize"),
 		nodeCount:          cfg.GetInt("nodeCount"),
+		clusterTier:        cfg.Get("clusterTier"),
 		argocdChartVersion: cfg.Get("argocdChartVersion"),
 		sealingCert:        cfg.RequireSecret("sealingCert"),
 		sealingKey:         cfg.RequireSecret("sealingKey"),
