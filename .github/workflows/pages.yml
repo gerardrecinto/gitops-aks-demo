@@ -1,0 +1,49 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "k8s/overlays/**", "docs/assets/demo.gif", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp site/index.html _site/
+          cp docs/assets/demo.gif _site/recording.gif
+          python3 - . _site/overlays.json k8s/overlays <<'PY'
+          import json, sys, os
+          root, out = sys.argv[1], sys.argv[2]
+          dirs = sys.argv[3:]
+          b = {}
+          for d in dirs:
+              for dp, _, fs in os.walk(os.path.join(root, d)):
+                  for f in fs:
+                      p = os.path.join(dp, f); b[os.path.relpath(p, root)] = open(p).read()
+          json.dump(b, open(out, "w"))
+          print(len(b), "files")
+          PY
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v5
