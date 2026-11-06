@@ -1,4 +1,4 @@
-# Interview walkthrough
+# Design walkthrough
 
 Short answers first. Each one ties back to something you can point at in this repo.
 

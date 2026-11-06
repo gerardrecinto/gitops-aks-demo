@@ -106,7 +106,7 @@ make down
 
 That runs `pulumi destroy`, which removes the resource group and everything in it. Check with `az group list -o table`. The Pulumi state, the GHCR images and this repo remain, so `make up` rebuilds the same environment.
 
-Details: [cost](docs/cost.md), [demo script](docs/demo-script.md), [troubleshooting](docs/troubleshooting.md), [interview walkthrough](docs/interview-walkthrough.md).
+Details: [cost](docs/cost.md), [demo script](docs/demo-script.md), [troubleshooting](docs/troubleshooting.md), [design walkthrough](docs/walkthrough.md).
 
 ## Related
 
